@@ -26,12 +26,7 @@ class board:
     def _find_full_rows(self):
         full_rows = []
         for r, row in enumerate(self.rows):
-            count = 0
-            for cell in row:
-                if cell.color != EMPTY:
-                    count += 1
-
-            if count == len(row):
+            if 0 == len([cell for cell in row if cell.color == EMPTY]):
                 full_rows.append(r)
 
         return full_rows
