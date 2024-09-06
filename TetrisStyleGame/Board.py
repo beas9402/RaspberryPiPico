@@ -3,15 +3,16 @@ EMPTY = 0
 # each cell in the grid starts as empty
 # and droppable
 class cell:
-    color    = EMPTY
-    can_drop = True
+    def __init__(self):
+        self.color    = EMPTY
+        self.can_drop = True
 
     def clear(self):
         self.color    = EMPTY
         self.can_drop = True
 
     def __repr__(self):
-        return "{}{}".format(" " if self.color == EMPTY else self.color, 
+        return "{}{}".format(" " if self.color == EMPTY else self.color,
                              "↓" if self.can_drop else " ")
 
 
