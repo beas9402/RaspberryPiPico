@@ -23,3 +23,4 @@ Rob Beasley
 Inspiration, code snippets, etc.
 * https://codingchallenges.fyi/challenges/challenge-tetris
 * https://javilop.com/gamedev/tetris-tutorial-in-c-platform-independent-focused-in-game-logic-for-beginners/
+* https://www.kosbie.net/cmu/fall-21/15-112/notes/notes-tetris/index.html

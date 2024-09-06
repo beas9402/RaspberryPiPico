@@ -1,24 +1,24 @@
-# define EMPTY as zero - when drawing cells be sure to check for EMPTY cells
-EMPTY = 0
-# each cell in the grid starts as empty
-# and droppable
+# class for each tetris cell in the game board
 class cell:
+    # define EMPTY as zero
+    EMPTY = 0
+    
     def __init__(self):
-        self.color    = EMPTY
-        self.can_drop = True
+        self.content  = cell.EMPTY
+        self.can_drop = False
 
     def clear(self):
-        self.color    = EMPTY
-        self.can_drop = True
-
+        self.content  = cell.EMPTY
+        self.can_drop = False
+        
+    # custom 
     def __repr__(self):
-        return "{}{}".format(" " if self.color == EMPTY else self.color,
+        return "{}{}".format(" " if self.content == cell.EMPTY else self.content, 
                              "↓" if self.can_drop else " ")
-
 
 # default board is 20 rows and 10 columns
 class board:
-    def __init__(self, rows=20, columns=10):
+    def __init__(self, rows=22, columns=10):
         self.size  = (columns, rows)
         self.score = 0
         self.rows  = [[cell() for c in range(columns)] for r in range(rows)]
@@ -28,7 +28,7 @@ class board:
         for r, row in enumerate(self.rows):
             count = 0
             for cell in row:
-                if cell.color != EMPTY:
+                if cell.content != cell.EMPTY:
                     count += 1
 
             if count == len(row):
@@ -50,7 +50,7 @@ class board:
             for c in range(self.size[0]):
                 if r in rows_to_delete:
                     droppable   = True
-                    self.score += self.rows[r][c].color * count
+                    self.score += self.rows[r][c].content * count
                     self.rows[r][c].clear()
                 elif droppable:
                     self.rows[r][c].can_drop = droppable
@@ -67,9 +67,9 @@ class board:
                     current.can_drop = False
                 else:
                     below = self.rows[r - 1][c]
-                    if (current.can_drop and current.color != EMPTY
-                                         and below.color   == EMPTY):
-                        below.color = current.color
+                    if (current.can_drop and current.content != cell.EMPTY
+                                         and below.content   == cell.EMPTY):
+                        below.content = current.content
                         below.can_drop = True
                         current.clear()
                         dropped += 1
@@ -89,12 +89,12 @@ class board:
             print("score  :", self.score)
 
 
-#'''
+'''
 ####################### TESTING ############################
     def _load_random(self):
         for r in range(self.size[1]):
             for c in range(self.size[0]):
-                self.rows[r][c].color = random.randint(0, 6)
+                self.rows[r][c].content = random.randint(0, 6)
                 self.rows[r][c].can_drop = False
 
 import random
@@ -110,6 +110,6 @@ done = False
 while not done:
     done = not b.drop() and not b.delete_full_rows()
     
-    
-b.drop()    
+b._print('Done', True)    
+#b.drop()    
 ############################################################'''
