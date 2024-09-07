@@ -24,12 +24,13 @@ class board:
         self.rows  = [[cell() for c in range(columns)] for r in range(rows)]
 
     def _find_full_rows(self):
-        full_rows = []
-        for r, row in enumerate(self.rows):
-            if 0 == len([cell for cell in row if cell.color == EMPTY]):
-                full_rows.append(r)
+        return [r for r, row in enumerate(self.rows)
+                if self._row_is_full(row)]
 
-        return full_rows
+    @staticmethod
+    def _row_is_full(row):
+        empty_cells = [cell for cell in row if cell.color == EMPTY]
+        return len(empty_cells) == 0
 
     def delete_full_rows(self):
         rows_to_delete = self._find_full_rows()
