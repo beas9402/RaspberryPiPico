@@ -1,8 +1,10 @@
-# define EMPTY as zero - when drawing cells be sure to check for EMPTY cells
+import random
+
+# define EMPTY as zero - when drawing Cells be sure to check for EMPTY Cells
 EMPTY = 0
-# each cell in the grid starts as empty
+# each Cell in the grid starts as empty
 # and droppable
-class cell:
+class Cell:
     def __init__(self):
         self.color    = EMPTY
         self.can_drop = True
@@ -16,19 +18,19 @@ class cell:
                              "↓" if self.can_drop else " ")
 
 
-# default board is 20 rows and 10 columns
-class board:
+# default Board is 20 rows and 10 columns
+class Board:
     def __init__(self, rows=20, columns=10):
         self.size  = (columns, rows)
         self.score = 0
-        self.rows  = [[cell() for c in range(columns)] for r in range(rows)]
+        self.rows  = [[Cell() for c in range(columns)] for r in range(rows)]
 
     def _find_full_rows(self):
         full_rows = []
         for r, row in enumerate(self.rows):
             count = 0
-            for cell in row:
-                if cell.color != EMPTY:
+            for c in row:
+                if c.color != EMPTY:
                     count += 1
 
             if count == len(row):
@@ -55,7 +57,7 @@ class board:
                 elif droppable:
                     self.rows[r][c].can_drop = droppable
 
-        self._print("Rows deleted {}".format(len(rows_to_delete)), DEBUG)
+        self._print("Rows deleted {}".format(len(rows_to_delete)), True )
         return True
 
     def drop(self):
@@ -76,7 +78,7 @@ class board:
                     else:
                         current.can_drop = False
         if dropped > 0:
-            self._print("Dropped", DEBUG)
+            self._print("Dropped", True)
         return dropped > 0
 
     def _print(self, message, is_debug):
@@ -97,19 +99,18 @@ class board:
                 self.rows[r][c].color = random.randint(0, 6)
                 self.rows[r][c].can_drop = False
 
-import random
-
-DEBUG = True
 
 
-b = board(rows=10)
-b._print('Empty Board', DEBUG)
-b._load_random()
-b._print('Load Random', DEBUG)
-done = False
-while not done:
-    done = not b.drop() and not b.delete_full_rows()
-    
-    
-b.drop()    
+if __name__ == "__main__":
+    DEBUG = True
+
+    b = Board(rows=10)
+    b._print('Empty Board', DEBUG)
+    b._load_random()
+    b._print('Load Random', DEBUG)
+    done = False
+    while not done:
+        done = not b.drop() and not b.delete_full_rows()
+    b._print("done", DEBUG)
+
 ############################################################'''
